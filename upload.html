@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upload Notes – EngiNotes</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:#f4f6fb;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+}
+
+/* CARD */
+.card{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  padding:22px;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+/* TITLE */
+.card h3{
+  margin-top:0;
+  text-align:center;
+  color:#1e3a6d;
+}
+
+/* FORM ELEMENTS */
+select,
+input,
+button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border-radius:8px;
+  font-size:15px;
+}
+
+/* INPUTS */
+select,
+input{
+  border:1px solid #ccc;
+}
+
+/* BUTTON */
+button{
+  background:#1e3a6d;
+  color:#fff;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:18px;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+/* SMALL TEXT */
+.hint{
+  font-size:13px;
+  color:#666;
+  margin-top:4px;
+}
+
+/* RESPONSIVE */
+@media (max-width:480px){
+  .card{
+    padding:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h3>Upload Notes</h3>
+
+  <select id="branch">
+    <option value="">Select Branch</option>
+    <option>CSE</option>
+    <option>CSD</option>
+    <option>AIML</option>
+    <option>IT</option>
+    <option>ECE</option>
+    <option>EEE</option>
+    <option>MECH</option>
+    <option>CIVIL</option>
+    <option>OTHER</option>
+    <option>ALL</option>
+  </select>
+
+  <select id="semester">
+    <option value="">Select Semester</option>
+    <option>1</option><option>2</option><option>3</option>
+    <option>4</option><option>5</option><option>6</option>
+    <option>7</option><option>8</option>
+  </select>
+
+  <input id="subject" placeholder="Subject name (eg: Python)">
+  <input id="unit" placeholder="Unit / Module">
+  <input id="link" placeholder="Google Drive link">
+
+  <p class="hint">Make sure the Drive link is public</p>
+
+  <button onclick="upload()" id="uploadBtn">Upload Notes</button>
+</div>
+
+<script>
+async function upload() {
+
+  const btn = document.getElementById("uploadBtn");
+  btn.innerText = "Uploading...";
+  btn.disabled = true;
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Please login first");
+    resetBtn();
+    location.href = "login.html";
+    return;
+  }
+
+  const userLink = link.value.trim().replace(/\s/g, "");
+
+  if (
+    !branch.value ||
+    !semester.value ||
+    !subject.value.trim() ||
+    !unit.value.trim() ||
+    !userLink
+  ) {
+    alert("Please fill all fields");
+    resetBtn();
+    return;
+  }
+
+  if (!userLink.startsWith("https://drive.google.com/")) {
+    alert("Only valid Google Drive links allowed");
+    resetBtn();
+    return;
+  }
+
+  if (
+    userLink.includes("bit.ly") ||
+    userLink.includes("tinyurl") ||
+    userLink.includes("goo.gl")
+  ) {
+    alert("Shortened links not allowed");
+    resetBtn();
+    return;
+  }
+
+  if (!userLink.startsWith("https://")) {
+    alert("Link must start with https://");
+    resetBtn();
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/upload", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify({
+        branch: branch.value,
+        semester: Number(semester.value),
+        subject: subject.value.trim(),
+        unit: unit.value.trim(),
+        link: userLink
+      })
+    });
+
+    const msg = await res.text();
+
+    if (!res.ok) {
+      alert("No " + msg);
+      resetBtn();
+      return;
+    }
+
+    alert("Ok " + msg);
+
+    subject.value = "";
+    unit.value = "";
+    link.value = "";
+
+    location.href = "index.html";
+
+  } catch (err) {
+    alert("Upload failed");
+    resetBtn();
+  }
+
+  function resetBtn(){
+    btn.innerText = "Upload Notes";
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>

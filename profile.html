@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile – EngiNotes</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f4f6fb;
+  padding:15px;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.note-card{
+  background:#f9fafc;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:12px;
+  border:1px solid #e2e6ef;
+}
+
+.status{
+  padding:4px 10px;
+  border-radius:20px;
+  color:#fff;
+  font-size:13px;
+}
+
+.published{background:#27ae60}
+.draft{background:#e67e22}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h3>My Profile</h3>
+  <p>Email: <b id="email"></b></p>
+  <p> Points: <b id="points">0</b></p>
+
+  <h4>My Uploaded Notes</h4>
+  <div id="myNotes"></div>
+
+</div>
+
+<script>
+const token = localStorage.getItem("token");
+
+if (!token) {
+  alert("Please login");
+  location.href = "login.html";
+}
+
+// 🔥 LOAD PROFILE
+fetch("http://localhost:5000/profile", {
+  headers: { "Authorization": token }
+})
+.then(res => res.json())
+.then(data => {
+  email.innerText = data.email;
+  points.innerText = data.points || 0;
+});
+
+// 🔥 LOAD MY NOTES
+fetch("http://localhost:5000/my-notes", {
+  headers: { "Authorization": token }
+})
+.then(res => res.json())
+.then(notes => {
+
+  if (!notes.length) {
+    myNotes.innerHTML = "<p>No notes uploaded yet</p>";
+    return;
+  }
+
+  notes.forEach(n => {
+    myNotes.innerHTML += `
+      <div class="note-card">
+        <b>${n.subject || "Untitled"}</b>
+        <span class="status ${n.isApproved ? "published" : "draft"}">
+          ${n.isApproved ? "Published" : "Pending"}
+        </span>
+      </div>
+    `;
+  });
+
+});
+</script>
+
+</body>
+</html>

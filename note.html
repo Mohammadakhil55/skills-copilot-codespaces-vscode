@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EngiNotes</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#f4f6fb;
+  padding:20px;
+}
+
+.card{
+  max-width:500px;
+  margin:auto;
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+button{
+  padding:10px 15px;
+  background:#1e3a6d;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h3>Note Details</h3>
+  <div id="note">Loading...</div>
+</div>
+
+<script>
+const noteEl = document.getElementById("note");
+
+const id = new URLSearchParams(location.search).get("id");
+
+if (!id) {
+  noteEl.innerHTML = "<p>Invalid note link</p>";
+} else {
+  fetch("http://localhost:5000/note/" + id)
+    .then(res => res.json())
+    .then(n => {
+
+      if (!n || !n.link) {
+        noteEl.innerHTML = "<p>Note not found</p>";
+        return;
+      }
+
+      // 🔒 Safety check
+      if (!n.link.startsWith("https://drive.google.com/")) {
+        noteEl.innerHTML = "<p>Unsafe link blocked</p>";
+        return;
+      }
+
+      noteEl.innerHTML = `
+        <h4>${n.subject || "Untitled Note"}</h4>
+        <p>${n.branch} • Sem ${n.semester}</p>
+
+        <p style="color:#555;font-size:14px;">
+        This file is hosted on Google Drive. EngiNotes does not host files directly.
+        </p>
+
+        <button onclick="openNote('${n.link}','${n._id}')">
+          Open Notes
+        </button>
+      `;
+    })
+    .catch(() => {
+      noteEl.innerHTML = "<p>Error loading note</p>";
+    });
+}
+
+// 🔥 open with tracking
+function openNote(link, id){
+
+  fetch("http://localhost:5000/download/" + id, {
+    method: "POST"
+  });
+
+  window.open(link, "_blank", "noopener,noreferrer");
+}
+</script>
+
+</body>
+</html>

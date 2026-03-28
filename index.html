@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EngiNotes Free Engineering Notes</title>
+<meta name="google-site-verification" content="WRS5strHBOatksqEOcRtW3fOvA0Hy3zXMHXz-hdwLjQ" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+<!--  SEO META -->
+<meta name="description" content="Download free engineering notes for CSE, ECE, EEE, Civil, Mechanical and more. EngiNotes helps students access quality academic materials easily.">
+<meta name="keywords" content="Enginotes,Engineering notes, CSE notes, ECE notes, EEE notes, Semester notes, Free study materials">
+<meta name="author" content="Mohammad Akhil">
+
+<!--  FUTURE ADSENSE (Add after approval) -->
+<!--
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_PUB_ID"
+crossorigin="anonymous"></script>
+-->
+<link rel="canonical" href="https://enginotes.in/">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{--p:#1e3a6d;--bg:#f4f6fb}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg)}
+
+header{
+  background:var(--p);color:#fff;padding:14px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:100
+}
+.main-header{
+  background:#1e3a6d;
+  color:white;
+  padding:12px 18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width: 100%;
+}
+.search-container{
+  display:flex;
+  align-items:center;
+  border-radius:4px;
+  overflow:hidden;
+  transition:all 0.4s ease;
+  width:42px;
+}
+
+.search-container input{
+  border:none;
+  outline:none;
+  padding:8px;
+  width:0;
+  opacity:0;
+  transition:all 0.4s ease;
+  font-size:14px;
+}
+
+.search-container.active{
+  width:220px;
+  background:white;
+}
+
+.search-container.active input{
+  width:170px;
+  opacity:1;
+}
+
+.search-icon{
+  font-size:18px;
+  color:white;
+  cursor:pointer;
+  padding:10px;
+}
+
+.search-container.active .search-icon{
+  color:#1e3a6d;
+}
+
+.menu-btn{font-size:26px;cursor:pointer}
+
+nav{
+  display:none;position:absolute;top:60px;right:20px;
+  background:#fff;border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,.2);overflow:hidden
+}
+
+nav a{
+  display:block;padding:12px 18px;
+  text-decoration:none;color:#333
+}
+nav a:hover{background:#f1f1f1}
+
+.hero{
+  background:#ffffff;
+  padding:40px 20px;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  color:var(--p);
+  margin-bottom:10px;
+}
+
+.hero p{
+  max-width:700px;
+  margin:auto;
+  color:#555;
+}
+
+.container{max-width:1000px;margin:auto;padding:15px}
+
+.filters{display:grid;gap:10px;margin-bottom:20px}
+@media(min-width:768px){.filters{grid-template-columns:2fr 1fr 1fr}}
+
+input,select{
+  padding:10px;border-radius:6px;border:1px solid #ccc
+}
+
+.note{
+  background:#fff;padding:15px;border-radius:12px;margin-bottom:14px;
+  box-shadow:0 3px 8px rgba(0,0,0,.08)
+}
+
+.actions{display:flex;gap:10px;margin-top:10px}
+
+button{
+  padding:8px 14px;border:none;border-radius:6px;
+  background:var(--p);color:#fff;cursor:pointer
+}
+
+.small{font-size:13px;color:#555}
+
+footer{
+  margin-top:40px;background:#0f2547;color:#fff;
+  padding:18px;text-align:center;font-size:14px
+}
+
+footer a{
+  color:#fff;text-decoration:none;margin:0 6px
+}
+
+.fab{
+  position:fixed;bottom:20px;right:20px;width:56px;height:56px;
+  background:#1e3a6d;color:#fff;font-size:32px;
+  border-radius:50%;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;
+}
+
+/* Cookie Banner */
+.cookie{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#222;
+  color:#fff;
+  padding:12px;
+  text-align:center;
+  font-size:14px;
+}
+.cookie button{
+  margin-left:10px;
+  background:#fff;
+  color:#000;
+}
+</style>
+</head>
+
+<body>
+
+<header class="main-header">
+  <div class="header-actions">
+
+    <div class="search-container" id="searchContainer">
+      <input type="text" id="headerSearchInput" placeholder="Search subject...">
+   <i class="fas fa-search search-icon" onclick="toggleSearch()"></i>
+    </div>
+
+    <div class="menu-btn" onclick="toggleMenu()"> ☰</div>
+
+  </div>
+
+  <nav id="menu">
+    <a href="index.html">Home</a>
+    <a href="upload.html">Upload Notes</a>
+    <a href="profile.html">Profile</a>
+    <a href="blog.html">Blog</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </nav>
+</header>
+
+<!-- ✅ Public Content Section (Important for AdSense) -->
+<section class="hero">
+  <h1>Free Engineering Notes Platform</h1>
+  <p>
+    EngiNotes is a student-driven platform where engineering students can upload,
+    share, and download academic notes for various branches including CSE, ECE,
+    EEE, Civil, Mechanical and more. Our goal is to make quality study materials
+    easily accessible for everyone.
+  </p>
+  <p style="max-width:700px;margin:auto;color:#444;margin-top:10px;">
+All notes are uploaded by students and hosted on trusted platforms like Google Drive. 
+EngiNotes does not host or distribute any files directly.
+  </p>
+</section>
+<!-- 🔥 ADD THIS SECTION HERE -->
+<section style="background:#fff;padding:40px;margin:20px auto;max-width:1000px;border-radius:12px">
+  <h2>Why Choose EngiNotes?</h2>
+  <p>
+    EngiNotes provides high-quality handwritten and digital engineering notes 
+    for students across India. Our platform covers CSE, ECE, EEE, Mechanical, 
+    Civil and other branches. Students can easily search, filter and download 
+    semester-wise notes.
+  </p>
+
+  <h2>Available Branches</h2>
+  <ul>
+    <li>Computer Science Engineering (CSE)</li>
+    <li>Electronics & Communication Engineering (ECE)</li>
+    <li>Electrical Engineering (EEE)</li>
+    <li>Mechanical Engineering</li>
+    <li>Civil Engineering</li>
+  </ul>
+
+  <h2>How It Works</h2>
+  <p>
+    Students upload notes after logging in. Each note is reviewed before 
+    becoming publicly available. Downloads are tracked to ensure quality 
+    and engagement within the student community.
+  </p>
+
+  <h2>Frequently Asked Questions</h2>
+
+  <h4>Are the notes free?</h4>
+  <p>Yes, all notes available on EngiNotes are completely free.</p>
+
+  <h4>Can I upload my own notes?</h4>
+  <p>Yes. After logging in, you can upload notes for review and approval.</p>
+
+  <h4>Is registration required?</h4>
+  <p>Registration is required only to upload notes. Browsing is free.</p>
+</section>
+
+
+<div class="container">
+
+  <div id="filterSection" style="display:none;" class="filters">
+
+    <select id="branchFilter">
+      <option value="">All Branches</option>
+      <option>CSE</option>
+      <option>ECE</option>
+      <option>EEE</option>
+      <option>MECH</option>
+      <option>CIVIL</option>
+      <option>AIML</option>
+      <option>OTHER</option>
+    </select>
+
+    <select id="semFilter">
+      <option value="">All Semesters</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+      <option>7</option>
+      <option>8</option>
+    </select>
+
+  </div>
+
+  <div id="notes"></div>
+
+  <div id="pagination" style="display:flex;justify-content:center;align-items:center;gap:15px;margin:25px 0;">
+    <button id="prevBtn">Previous</button>
+    <span id="pageNumber">Page 1</span>
+    <button id="nextBtn">Next</button>
+  </div>
+
+</div>
+
+<div class="fab" onclick="location.href='upload.html'">+</div>
+
+<footer>
+  <p><strong>Developed by Mohammad Akhil</strong></p>
+  <p>
+We do not host any files. All notes are uploaded by users and hosted on third-party platforms like Google Drive.
+</p>
+  <p>© 2026 EngiNotes</p>
+  <p>
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms</a> |
+    <a href="contact.html">Contact</a>
+  </p>
+  <p>
+EngiNotes is an independent educational platform for students.
+</p>
+
+<p>
+All files are uploaded by users and hosted on Google Drive. 
+We do NOT host or distribute files directly.
+</p>
+
+<p>
+Secure login system powered by EngiNotes.
+</p>
+</footer>
+
+<!-- Cookie Notice -->
+<div class="cookie" id="cookieBox">
+  This website uses cookies and Google AdSense to serve ads.
+  <button onclick="acceptCookie()">OK</button>
+</div>
+
+<!-- FIREBASE + LOGIC -->
+<script>
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+
+if (token) {
+  localStorage.setItem("token", token);
+}  
+const notesEl = document.getElementById("notes");
+const branchFilter = document.getElementById("branchFilter");
+const semFilter = document.getElementById("semFilter");
+const headerSearchInput = document.getElementById("headerSearchInput");
+
+let allNotes = [];
+
+async function fetchNotes() {
+  notesEl.innerHTML = "<p>Loading notes...</p>";
+
+  try {
+    const res = await fetch("http://localhost:5000/notes");
+    allNotes = await res.json();
+    render();
+  } catch (err) {
+    notesEl.innerHTML = "<p>Server error. Please try again later.</p>";
+  }
+}
+
+function render() {
+  const text = headerSearchInput.value.toLowerCase();
+
+  const filtered = allNotes.filter(n => {
+    return (
+      (!branchFilter.value || n.branch === branchFilter.value) &&
+      (!semFilter.value || n.semester == semFilter.value) &&
+      (!text || (n.subject || "").toLowerCase().includes(text))
+    );
+  });
+
+  notesEl.innerHTML = "";
+
+  if (filtered.length === 0) {
+    notesEl.innerHTML = "<p>No notes available</p>";
+    return;
+  }
+
+ filtered.forEach(n => {
+
+  // 🔒 SAFETY CHECK (VERY IMPORTANT)
+  if (!n.link || !n.link.startsWith("https://drive.google.com/")) {
+    return;
+  }
+  shown++;
+  notesEl.innerHTML += `
+    <div class="note">
+      <h3>${n.subject || "Untitled Note"}</h3>
+      <p>${n.branch} • Sem ${n.semester}</p>
+
+      <button onclick="openNote('${n.link}','${n._id}')">
+        Open
+      </button>
+
+      <p class="small">⬇ ${n.downloads || 0}</p>
+    </div>
+  `;
+});
+if (shown === 0) {
+  notesEl.innerHTML = "<p>No valid notes available</p>";
+}
+}
+
+branchFilter.addEventListener("change", render);
+semFilter.addEventListener("change", render);
+headerSearchInput.addEventListener("input", render);
+
+fetchNotes();
+</script>
+<script>
+async function openNote(link, id) {
+
+  // 🔒 Safety check
+  if (!link.startsWith("https://drive.google.com/")) {
+    alert("Unsafe link blocked");
+    return;
+  }
+
+  // 📊 Update downloads
+  try {
+    await fetch("http://localhost:5000/download/" + id, {
+      method: "POST"
+    });
+  } catch {}
+
+  if(confirm("Open this file from Google Drive?")){
+    window.open(link, "_blank", "noopener,noreferrer");
+  }
+}
+</script>
+
+<script>
+function toggleMenu(){
+  const m=document.getElementById("menu");
+  m.style.display=m.style.display==="block"?"none":"block";
+}
+function toggleSearch(){
+  const container = document.getElementById("searchContainer");
+  container.classList.toggle("active");
+
+  if(container.classList.contains("active")){
+    document.getElementById("headerSearchInput").focus();
+  }
+}
+
+function acceptCookie(){
+  document.getElementById("cookieBox").style.display="none";
+}
+function shareNote(title, link){
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      text: "Download this engineering note from EngiNotes",
+      url: link
+    });
+  } else {
+    navigator.clipboard.writeText(link);
+    alert("Link copied! Share it anywhere.");
+  }
+}
+</script>
+</body>
+</html>
